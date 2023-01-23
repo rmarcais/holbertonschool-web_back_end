@@ -4,8 +4,12 @@
 from typing import Any, Sequence, Union
 
 
-# The types of the elements of the input are not know
+# The types of the elements of the input are not known
 def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
+    """
+    Returns the first element of a sequence,
+    or None if lst is None
+    """
     if lst:
         return lst[0]
     else:
