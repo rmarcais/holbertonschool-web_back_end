@@ -3,9 +3,8 @@
 
 import asyncio
 import time
-from typing import Callable, List
+from typing import List
 
-wait_n: Callable[[int, int], List[float]]
 wait_n = __import__('1-concurrent_coroutines').wait_n
 
 

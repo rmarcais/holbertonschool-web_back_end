@@ -2,9 +2,8 @@
 """Task 1. Let's execute multiple coroutines at the same time with async"""
 
 import asyncio
-from typing import Any, Awaitable, Callable, List
+from typing import Any, List
 
-wait_random: Callable[[int], float]
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
@@ -15,10 +14,10 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
 
     result: List[float] = []
 
-    tasks: List[Awaitable[Any]] = []
+    tasks: List[asyncio.Task] = []
 
     for i in range(n):
-        task: Awaitable[Any] = asyncio.create_task(wait_random(max_delay))
+        task: asyncio.Task = asyncio.create_task(wait_random(max_delay))
         tasks.append(task)
 
     for task in asyncio.as_completed(tasks):
