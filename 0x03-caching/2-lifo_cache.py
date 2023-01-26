@@ -19,11 +19,13 @@ class LIFOCache(BaseCaching):
         """Assigns to the dictionary self.cache_data
         the item value for the key key
         """
+        if key is None or item is None:
+            return
         if key and item:
             if (len(self.cache_data) >= BaseCaching.MAX_ITEMS and
                     key not in self.cache_data.keys()):
                 discard = LIFOCache.order[-1]
-                print("Discard: {}".format(discard))
+                print("DISCARD: {}".format(discard))
                 self.cache_data.pop(discard)
                 LIFOCache.order.pop()
             self.cache_data[key] = item
