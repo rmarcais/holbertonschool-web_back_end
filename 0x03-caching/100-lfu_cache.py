@@ -20,6 +20,8 @@ class LFUCache(BaseCaching):
         """Assigns to the dictionary self.cache_data
         the item value for the key key
         """
+        if key is None and item is None:
+            return
         if (len(self.cache_data) >= BaseCaching.MAX_ITEMS and
                 key not in self.cache_data.keys()):
             discard = [k for k, v in LFUCache.frequencies.items()
@@ -33,7 +35,7 @@ class LFUCache(BaseCaching):
             else:
                 discard = discard[0]
                 index = LFUCache.order.index(discard)
-            print("Discard: {}".format(discard))
+            print("DISCARD: {}".format(discard))
             self.cache_data.pop(discard)
             LFUCache.order.pop(index)
             LFUCache.frequencies.pop(discard)
