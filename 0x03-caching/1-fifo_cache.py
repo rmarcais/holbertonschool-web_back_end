@@ -19,6 +19,8 @@ class FIFOCache(BaseCaching):
         """Assigns to the dictionary self.cache_data
         the item value for the key key
         """
+        if key is None or item is None:
+            return
         if (len(self.cache_data) >= BaseCaching.MAX_ITEMS and
                 key not in self.cache_data.keys()):
             discard = FIFOCache.order[0]
