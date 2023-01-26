@@ -37,7 +37,6 @@ class LFUCache(BaseCaching):
                 index = LFUCache.order.index(discard)
             print("DISCARD: {}".format(discard))
             self.cache_data.pop(discard)
-            LFUCache.order.pop(index)
             LFUCache.frequencies.pop(discard)
         self.cache_data[key] = item
         if key not in LFUCache.frequencies.keys():
