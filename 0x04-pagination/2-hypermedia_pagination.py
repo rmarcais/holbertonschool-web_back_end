@@ -51,12 +51,14 @@ class Server:
         dataset = self.dataset()
         data: List[List] = self.get_page(page, page_size)
         next_page = page + 1
-        if next_page > len(dataset):
+        if next_page * page_size > len(dataset):
             next_page = None
         prev_page = page - 1
         if prev_page == 0:
             prev_page = None
         total_pages: int = math.ceil(len(dataset) / page_size)
+        if data == []:
+            page_size = 0
 
         params: Dict[str, Any] = {
             'page_size': page_size,

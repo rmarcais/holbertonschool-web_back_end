@@ -51,7 +51,7 @@ class Server:
                 next_index += 1
                 index += 1
         for i in range(index, next_index):
-                data.append(dataset[i])
+            data.append(dataset[i])
         params = {
             'index': index,
             'next_index': next_index,
