@@ -14,7 +14,7 @@ def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """Returns the log messafe obfuscated"""
     for field in fields:
-        pattern = r"(?<={}=)[\w*\d*\/.@-]+(?={})".format(field, separator)
+        pattern = r"(?<={}=)[^;]+(?={})".format(field, separator)
         message = re.sub(pattern, redaction, message)
     return message
 
@@ -66,3 +66,31 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connector
+
+
+def main() -> None:
+    """Main function that obtains a databse connection using get_db,
+    retrieves all rows in the users tables and displays each row under a
+    fieltered format
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    logger = get_logger()
+    for row in cursor:
+        message = "name={}; email={}; phone={}; ssn={}; password={}; "\
+                   "ip={}; last_origin={}; user_agent={};".format(row[0],
+                                                                  row[1],
+                                                                  row[2],
+                                                                  row[3],
+                                                                  row[4],
+                                                                  row[5],
+                                                                  row[6],
+                                                                  row[7],)
+        logger.info(message)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
