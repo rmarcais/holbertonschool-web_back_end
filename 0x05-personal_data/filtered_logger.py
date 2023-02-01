@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Task 0. Regex-ing"""
+"""filtered_logger module"""
 
 import logging
+import mysql.connector
+import os
 import re
 from typing import List, Tuple
 
@@ -47,3 +49,20 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Returns a connector to the database"""
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME")
+    pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD")
+    host = os.getenv("PERSONAL_DATA_DB_HOST")
+    db = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    connector = mysql.connector.connect(
+        host=host,
+        user=username,
+        password=pwd,
+        database=db
+    )
+
+    return connector
