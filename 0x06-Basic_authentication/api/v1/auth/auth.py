@@ -9,7 +9,9 @@ class Auth():
     """ Auth class """
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ Return False """
+        """Return True if the path is not in
+        the list of strings excluded_path
+        """
         if not path or not excluded_paths or excluded_paths == []:
             return True
         if path[-1] == "/":
@@ -22,9 +24,10 @@ class Auth():
         return True
 
     def authorization_header(self, request=None) -> str:
-        """ Return None """
-        return None
-
+        """ Return None or value of the header request Authorization """
+        if request is None or "Authorization" not in request.headers.keys():
+            return None
+        return request.headers["Authorization"]
     def current_user(self, request=None) -> TypeVar('User'):
         """ Retutn None """
         return None
