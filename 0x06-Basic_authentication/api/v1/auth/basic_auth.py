@@ -33,3 +33,21 @@ class BasicAuth(Auth):
                           .decode('utf-8'))
         except Exception:
             return None
+
+    def extract_user_credentials(self,
+                                 decoded_base64_authorization_header: str)\
+            -> (str, str):
+        """
+        Returns tje user email and password
+        from the Base64 decoded value
+        """
+        if (decoded_base64_authorization_header is None or
+                type(decoded_base64_authorization_header) is not str or
+                ":" not in decoded_base64_authorization_header):
+            return (None, None)
+
+        index = decoded_base64_authorization_header.index(":")
+        email = decoded_base64_authorization_header[:index]
+        password = decoded_base64_authorization_header[index + 1:]
+
+        return (email, password)
