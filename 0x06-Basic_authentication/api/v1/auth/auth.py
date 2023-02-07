@@ -19,6 +19,10 @@ class Auth():
         for i in range(len(excluded_paths)):
             if excluded_paths[i][-1] == "/":
                 excluded_paths[i] = excluded_paths[i][:-1]
+            if excluded_paths[i][-1] == "*":
+                len_excl_path = len(excluded_paths[i][:-1])
+                if path[:len_excl_path] == excluded_paths[i][:len_excl_path]:
+                    return False
         if path in excluded_paths:
             return False
         return True
