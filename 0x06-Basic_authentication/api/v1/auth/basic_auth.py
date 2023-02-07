@@ -69,7 +69,6 @@ class BasicAuth(Auth):
         user_list = []
 
         user_list = User.search({"email": user_email})
-        print(user_list)
         if user_list == []:
             return None
 
