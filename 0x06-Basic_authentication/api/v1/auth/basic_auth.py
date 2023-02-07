@@ -67,11 +67,10 @@ class BasicAuth(Auth):
             return None
 
         user_list = []
-        try:
-            user_list = User.search({"email": user_email})
-            if user_list == []:
-                return None
-        except Exception:
+
+        user_list = User.search({"email": user_email})
+        print(user_list)
+        if user_list == []:
             return None
 
         user = user_list[0]
