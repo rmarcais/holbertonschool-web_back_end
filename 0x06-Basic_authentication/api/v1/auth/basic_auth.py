@@ -40,7 +40,7 @@ class BasicAuth(Auth):
                                  decoded_base64_authorization_header: str)\
             -> (str, str):
         """
-        Returns tje user email and password
+        Returns the user email and password
         from the Base64 decoded value
         """
         if (decoded_base64_authorization_header is None or
@@ -67,8 +67,11 @@ class BasicAuth(Auth):
             return None
 
         user_list = []
-        user_list = User.search({"email": user_email})
-        if user_list == []:
+        try:
+            user_list = User.search({"email": user_email})
+            if user_list == []:
+                return None
+        except Exception:
             return None
 
         user = user_list[0]
@@ -76,3 +79,16 @@ class BasicAuth(Auth):
             return user
 
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """ Retrieves the User instance for a request """
+        try:
+            header = self.authorization_header(request)
+            base64_part = self.extract_base64_authorization_header(header)
+            clear_part = self.decode_base64_authorization_header(base64_part)
+            creadentials = self.extract_user_credentials(clear_part)
+
+            return self.user_object_from_credentials(creadentials[0],
+                                                     creadentials[1])
+        except Exception:
+            return None
