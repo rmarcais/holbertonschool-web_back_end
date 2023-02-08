@@ -24,8 +24,11 @@ def login() -> str:
     if not password or password == "":
         return jsonify({"error": "password missing"}), 400
 
-    user_list = User.search({"email": email})
-    if not user_list:
+    try:
+        user_list = User.search({"email": email})
+        if not user_list:
+            return jsonify({"error": "no user found for this email"}), 404
+    except Exception:
         return jsonify({"error": "no user found for this email"}), 404
 
     user = user_list[0]
@@ -40,3 +43,19 @@ def login() -> str:
     response.set_cookie(cookie_name, session_id)
 
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout() -> str:
+    """
+    DELETE /auth_session/logout
+    Returns an empty JSON dictionary with the status code 200
+    """
+    from api.v1.app import auth
+    auth = SessionAuth()
+    result = auth.destroy_session(request)
+    if not result:
+        abort(404)
+
+    return jsonify({}), 200
