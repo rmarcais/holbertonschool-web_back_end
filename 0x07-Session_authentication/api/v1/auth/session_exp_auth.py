@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ session_exp_auth module containing the SessionExpAuth class """
 
-from api.v1.views.session_auth import SessionAuth
+from api.v1.auth.session_auth import SessionAuth
 from datetime import datetime as d, timedelta
 import os
 
