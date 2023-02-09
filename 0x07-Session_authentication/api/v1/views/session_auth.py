@@ -52,7 +52,6 @@ def logout() -> str:
     Returns an empty JSON dictionary with the status code 200
     """
     from api.v1.app import auth
-    auth = SessionAuth()
     result = auth.destroy_session(request)
     if not result:
         abort(404)
