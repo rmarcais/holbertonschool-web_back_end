@@ -3,7 +3,6 @@
 
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
-from typing import TypeVar
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -11,9 +10,11 @@ class SessionDBAuth(SessionExpAuth):
 
     def create_session(self, user_id: str = None) -> str:
         """Creates a Session ID for a user_id"""
+        session_id = super().create_session(user_id)
+        if not session_id:
+            return None
         user_session = UserSession()
         user_session.user_id = user_id
-        session_id = super().create_session(user_id)
         user_session.session_id = session_id
         user_session.save()
 
