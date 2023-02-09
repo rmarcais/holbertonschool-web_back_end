@@ -43,7 +43,7 @@ class SessionDBAuth(SessionExpAuth):
 
         session_dict = self.user_id_by_session_id.get(session_id)
         if not session_dict:
-            return None
+            return user_id
 
         created_at = session_dict.get("created_at")
 
