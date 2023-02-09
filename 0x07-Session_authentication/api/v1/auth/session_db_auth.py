@@ -29,7 +29,7 @@ class SessionDBAuth(SessionExpAuth):
     def destroy_session(self, request=None) -> bool:
         """Deletes the user session / logouts"""
         if not request:
-            return None
+            return False
         session_id = request.cookies.get(os.getenv("SESSION_NAME"))
         for item in UserSession.all():
             if item.session_id == session_id:
