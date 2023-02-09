@@ -23,27 +23,20 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID"""
-        result = super().user_id_for_session_id(session_id)
-        return result
+        if not session_id:
+            return None
+        user_session = UserSession.search({"session_id": session_id})
+        if not user_session:
+            return None
+
+        return user_session[0].user_id
 
     def destroy_session(self, request=None) -> bool:
         """Deletes the user session / logouts"""
-        if request is None:
+        if not request:
             return False
 
-        session_id = self.session_cookie(request)
-        if not session_id:
-            return False
-
-        user_id = self.user_id_for_session_id(session_id)
-        if not user_id:
-            return False
-
-        for item in UserSession.all():
-            if item.session_id == session_id:
-                item.remove()
-                break
-
-        del self.user_id_by_session_id[session_id]
-
-        return True
+        session_id = request.cookies.get(os.getenv("SESSION_NAME"))
+        user_session = UserSession.search({"session_id": session_id})
+        user_session[0].remove()
+        return super().destroy_session(request)
