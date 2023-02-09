@@ -23,10 +23,10 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID"""
-        if not session_id:
+        if not session_id or not isinstance(session_id, str):
             return None
         user_session = UserSession.search({"session_id": session_id})
-        if not user_session:
+        if not user_session or user_session == []:
             return None
 
         return user_session[0].user_id
@@ -45,6 +45,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         user_session[0].remove()
+
         del self.user_id_by_session_id[session_id]
 
         return True
