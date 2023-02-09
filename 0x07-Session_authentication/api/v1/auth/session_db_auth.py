@@ -23,6 +23,8 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID"""
+        if not session_id:
+            return None
         result = super().user_id_for_session_id(session_id)
         return result
 
