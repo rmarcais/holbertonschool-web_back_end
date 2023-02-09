@@ -4,6 +4,7 @@
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 import os
+from datetime import datetime as d, timedelta
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -23,13 +24,33 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID"""
-        if not session_id or not isinstance(session_id, str):
-            return None
-        user_session = UserSession.search({"session_id": session_id})
-        if not user_session or user_session == []:
+        if not session_id:
             return None
 
-        return user_session[0].user_id
+        session_dict = self.user_id_by_session_id.get(session_id)
+        if not session_dict:
+            return None
+
+        user_sessions = UserSession.search({"session_id": session_id})
+        if user_sessions == []:
+            return None
+
+        user_session = user_sessions[0]
+
+        user_id = user_session.id
+
+        if self.session_duration <= 0:
+            return user_id
+
+        created_at = session_dict.get("created_at")
+        if not created_at:
+            return None
+
+        exp_date = created_at + timedelta(seconds=self.session_duration)
+        if exp_date < d.now():
+            return None
+
+        return user_session.user_id
 
     def destroy_session(self, request=None) -> bool:
         """Deletes the user session / logouts"""
