@@ -23,7 +23,6 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID"""
-        print("lalala")
         if not session_id:
             return None
         for item in UserSession.all():
@@ -47,5 +46,7 @@ class SessionDBAuth(SessionExpAuth):
             if item.session_id == session_id:
                 item.remove()
                 break
+
+        del self.user_id_by_session_id[session_id]
 
         return True
