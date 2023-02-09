@@ -23,11 +23,8 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID"""
-        if not session_id or not isinstance(session_id, str):
-            return None
-        for item in UserSession.all():
-            if item.session_id == session_id:
-                return item.user_id
+        result = super().user_id_for_session_id(session_id)
+        return result
 
     def destroy_session(self, request=None) -> bool:
         """Deletes the user session / logouts"""
