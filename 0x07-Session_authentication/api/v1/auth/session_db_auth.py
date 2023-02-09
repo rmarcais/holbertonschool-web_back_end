@@ -3,6 +3,7 @@
 
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
+import os
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -27,4 +28,9 @@ class SessionDBAuth(SessionExpAuth):
 
     def destroy_session(self, request=None) -> bool:
         """Deletes the user session / logouts"""
+        session_id = request.cookies.get(os.getenv("SESSION_NAME"))
+        for item in UserSession.all():
+            if item.session_id == session_id:
+                item.remove()
+                break
         return super().destroy_session(request)
