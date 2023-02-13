@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """DB module
 """
 from sqlalchemy import create_engine
@@ -19,7 +20,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=False)
+        self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -68,8 +69,8 @@ class DB:
         for k, v in kwargs.items():
             if hasattr(user, k):
                 setattr(user, k, v)
-                session.add(user)
-                session.commit()
             else:
                 raise ValueError
+        session.add(user)
+        session.commit()
         return None
