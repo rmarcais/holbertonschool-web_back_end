@@ -6,7 +6,6 @@ import bcrypt
 import uuid
 from db import DB
 from typing import TypeVar
-from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
@@ -35,7 +34,7 @@ class Auth:
         try:
             user = self._db.find_user_by(email=email)
             raise ValueError("User {} already exists".format(user.email))
-        except NoResultFound:
+        except Exception:
             pass
 
         hashed_password = _hash_password(password).decode()
@@ -52,7 +51,7 @@ class Auth:
             password = password.encode("utf-8")
             user_password = user.hashed_password.encode("utf-8")
             return bcrypt.checkpw(password, user_password)
-        except NoResultFound:
+        except Exception:
             return False
 
     def create_session(self, email: str) -> str:
