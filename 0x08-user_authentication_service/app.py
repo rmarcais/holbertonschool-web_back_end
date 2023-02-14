@@ -7,7 +7,7 @@ from auth import Auth
 
 app = Flask(__name__)
 
-auth = Auth()
+AUTH = Auth()
 
 
 @app.route('/')
@@ -23,7 +23,7 @@ def users() -> str:
     password = request.form.get("password")
 
     try:
-        auth.register_user(email, password)
+        AUTH.register_user(email, password)
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
     return jsonify({"email": "{}".format(email), "message": "user created"})
@@ -35,8 +35,8 @@ def login() -> str:
     email = request.form.get("email")
     password = request.form.get("password")
 
-    if auth.valid_login(email, password):
-        session_id = auth.create_session(email)
+    if AUTH.valid_login(email, password):
+        session_id = AUTH.create_session(email)
         res = jsonify({"email": "{}".format(email), "message": "logged in"})
         res.set_cookie("session_id", session_id)
         return res
@@ -49,8 +49,8 @@ def logout() -> str:
     """logout function"""
     session_id = request.cookies.get("session_id")
     try:
-        user = auth.get_user_from_session_id(session_id)
-        auth.destroy_session(user.id)
+        user = AUTH.get_user_from_session_id(session_id)
+        AUTH.destroy_session(user.id)
         return redirect("/", 301)
     except Exception:
         abort(403)
@@ -60,7 +60,7 @@ def logout() -> str:
 def profile() -> str:
     """profile function to respond to the GET /profile route"""
     session_id = request.cookies.get("session_id")
-    user = auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
     if not user:
         abort(403)
     return jsonify({"email": "{}".format(user.email)})
