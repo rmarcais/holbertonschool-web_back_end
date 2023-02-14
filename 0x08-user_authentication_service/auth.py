@@ -68,7 +68,7 @@ class Auth:
             session_id = _generate_uuid()
             self._db.update_user(user_id, session_id=session_id)
             return session_id
-        except NoResultFound:
+        except Exception:
             return None
 
     def get_user_from_session_id(self, session_id: str) -> TypeVar("User"):
@@ -87,7 +87,7 @@ class Auth:
         try:
             user = self._db.find_user_by(id=user_id)
             self._db.update_user(user_id, session_id=None)
-        except NoResultFound:
+        except Exception:
             return
 
     def get_reset_password_token(self, email: str) -> str:
@@ -101,7 +101,7 @@ class Auth:
             reset_token = _generate_uuid()
             self._db.update_user(user_id, reset_token=reset_token)
             return reset_token
-        except NoResultFound:
+        except Exception:
             raise ValueError
 
     def update_password(self, reset_token: str, password: str) -> None:
@@ -112,6 +112,6 @@ class Auth:
             password = _hash_password(password).decode()
             self._db.update_user(user_id, hashed_password=password,
                                  reset_token=None)
-        except NoResultFound:
+        except Exception:
             raise ValueError
         return None
