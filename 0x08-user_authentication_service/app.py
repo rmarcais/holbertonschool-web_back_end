@@ -2,7 +2,7 @@
 """Route module for the API
 """
 
-from flask import Flask, abort, jsonify, request
+from flask import Flask, abort, jsonify, request, redirect
 from auth import Auth
 
 app = Flask(__name__)
@@ -51,8 +51,19 @@ def logout() -> str:
     try:
         user = auth.get_user_from_session_id(session_id)
         auth.destroy_session(user.id)
+        return redirect("/", 301)
     except Exception:
         abort(403)
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile() -> str:
+    """profile function to respond to the GET /profile route"""
+    session_id = request.cookies.get("session_id")
+    user = auth.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+    return jsonify({"email": "{}".format(user.email)})
 
 
 if __name__ == "__main__":
