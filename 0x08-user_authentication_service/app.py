@@ -51,7 +51,7 @@ def logout() -> str:
     try:
         user = AUTH.get_user_from_session_id(session_id)
         AUTH.destroy_session(user.id)
-        return redirect("http://localhost:5000/", 301)
+        return redirect("http://localhost:5000/", 302)
     except Exception:
         abort(403)
 
