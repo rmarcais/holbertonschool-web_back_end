@@ -40,8 +40,10 @@ class DB:
         user.email = email
         user.hashed_password = hashed_password
 
-        self._session.add(user)
-        self._session.commit()
+        session = self._session
+
+        session.add(user)
+        session.commit()
 
         return user
 
