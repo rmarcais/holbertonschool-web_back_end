@@ -62,7 +62,7 @@ def log_out(session_id: str) -> None:
     r = requests.delete("http://localhost:5000/sessions", cookies=cookies,
                         allow_redirects=False)
 
-    assert r.status_code == 301
+    assert r.status_code == 302
 
 
 def reset_password_token(email: str) -> str:
