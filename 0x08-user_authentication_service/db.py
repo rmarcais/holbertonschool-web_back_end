@@ -53,11 +53,12 @@ class DB:
         session = self._session
         try:
             query = session.query(User).filter_by(**kwargs)
-            if not query.first():
+            user = query.first()
+            if not user:
                 raise NoResultFound
+            return query.first()
         except InvalidRequestError:
             raise
-        return query.first()
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Updates the user's attributes"""
