@@ -10,8 +10,6 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
-from typing import TypeVar
-
 
 class DB:
     """DB class
@@ -47,7 +45,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs) -> TypeVar("User"):
+    def find_user_by(self, **kwargs) -> User:
         """
         Returns the first row found in the users table
         as filtered by the arguments kwargs
