@@ -6,7 +6,6 @@ from typing import Any, Dict, Mapping, Sequence
 from client import GithubOrgClient
 from unittest.mock import patch, PropertyMock
 import unittest
-import client
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -31,7 +30,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """Tests the _public_repos_url method"""
         target = "client.GithubOrgClient.org"
         with patch(target, new_callable=PropertyMock) as m_org:
-            #m_org.return_value = {"payload": True}
-            #client = GithubOrgClient("google")
-            #result = client._public_repos_url
-            self.assertEqual({"payload": True}, {"payload": True})
+            m_org.return_value = {"repos_url": "example"}
+            client = GithubOrgClient("google")
+            result = client.org
+            self.assertEqual(result, {"repos_url": "example"})
