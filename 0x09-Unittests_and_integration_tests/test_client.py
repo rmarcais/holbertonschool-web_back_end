@@ -87,6 +87,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
         cls.mock_get.side_effect = [
             mock_response_org,
+            mock_response_repos,
+            mock_response_org,
             mock_response_repos
         ]
 
@@ -97,3 +99,15 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         in an individual class have run
         """
         cls.get_patcher.stop()
+
+    def test_public_repos(self) -> None:
+        """Tests the public_repos method"""
+        client = GithubOrgClient("google")
+        result = client.public_repos()
+        self.assertEqual(result, self.expected_repos)
+
+    def test_public_repos_with_license(self) -> None:
+        """Tests the public_repos method with a license"""
+        client = GithubOrgClient("google")
+        result = client.public_repos("apache-2.0")
+        self.assertEqual(result, self.apache2_repos)
