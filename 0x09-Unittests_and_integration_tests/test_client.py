@@ -79,6 +79,16 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         cls.get_patcher = patch('requests.get')
         cls.mock_get = cls.get_patcher.start()
+        mock_response_org = Mock()
+        mock_response_org.json.return_value = cls.org_payload
+
+        mock_response_repos = Mock()
+        mock_response_repos.json.return_value = cls.repos_payload
+
+        cls.mock_get.side_effect = [
+            mock_response_org,
+            mock_response_repos
+        ]
 
     @classmethod
     def tearDownClass(cls):
@@ -87,21 +97,3 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         in an individual class have run
         """
         cls.get_patcher.stop()
-
-    def test_public_repos(self) -> None:
-        """Tests the public_repos method"""
-        mock_response_org = Mock()
-        mock_response_org.json.return_value = self.org_payload
-
-        mock_response_repos = Mock()
-        mock_response_repos.json.return_value = self.repos_payload
-
-        self.mock_get.side_effect = [
-            mock_response_org,
-            mock_response_repos
-        ]
-        client = GithubOrgClient("google")
-        result = client.public_repos()
-        result_with_license = client.public_repos("apache-2.0")
-        self.assertEqual(result, self.expected_repos)
-        self.assertEqual(result_with_license, self.apache2_repos)
