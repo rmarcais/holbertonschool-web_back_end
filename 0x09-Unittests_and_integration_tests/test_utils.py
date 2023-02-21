@@ -2,6 +2,7 @@
 """test_utils module"""
 
 from parameterized import parameterized
+from typing import Any, Dict, Mapping, Sequence
 from utils import access_nested_map, get_json, memoize
 from unittest.mock import patch, Mock
 import unittest
@@ -15,7 +16,8 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-    def test_access_nested_map(self, nested_map, path, expected):
+    def test_access_nested_map(self, nested_map: Mapping,
+                               path: Sequence, expected: Any) -> None:
         """Tests the access_nested_map function"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
@@ -23,7 +25,9 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a",), "'a'"),
         ({"a": 1}, ("a", "b"), "'b'")
     ])
-    def test_access_nested_map_exception(self, nested_map, path, expected):
+    def test_access_nested_map_exception(self, nested_map: Mapping,
+                                         path: Sequence,
+                                         expected: Any) -> None:
         """Tests the access_nested_map function"""
         with self.assertRaises(KeyError) as error:
             access_nested_map(nested_map, path)
@@ -37,7 +41,7 @@ class TestGetJson(unittest.TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
-    def test_get_json(self, test_url, test_payload):
+    def test_get_json(self, test_url: str, test_payload: Dict) -> None:
         """Tests the get_json function"""
         patcher = patch("requests.get")
         mock_get = patcher.start()
@@ -56,7 +60,7 @@ class TestGetJson(unittest.TestCase):
 class TestMemoize(unittest.TestCase):
     """TestMemoize class"""
 
-    def test_memoize(self):
+    def test_memoize(self) -> None:
         """Tests the memoize function"""
 
         class TestClass:
@@ -73,6 +77,5 @@ class TestMemoize(unittest.TestCase):
             mock_a_method.return_value = 42
             result = my_obj.a_property
             self.assertEqual(result, 42)
-            mock_a_method.assert_called_once()
             result = my_obj.a_property
             mock_a_method.assert_called_once()
