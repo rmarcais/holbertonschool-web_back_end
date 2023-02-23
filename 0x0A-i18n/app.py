@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Route module for the API"""
+import datetime
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from typing import Dict
+import locale
 import pytz
 
 app = Flask(__name__)
@@ -45,7 +47,7 @@ def get_locale() -> str:
 
 
 @babel.timezoneselector
-def get_timezone() -> str:
+def get_timezone() -> pytz.timezone:
     """Returns a URL-provided or user time zone"""
     timezone_url = request.args.get("timezone")
     try:
@@ -53,9 +55,10 @@ def get_timezone() -> str:
             timezone = g.user["timezone"]
         else:
             timezone = timezone_url
-        return timezone
+        return pytz.timezone(timezone)
     except (pytz.exceptions.UnknownTimeZoneError, Exception):
-        return app.config['BABEL_DEFAULT_TIMEZONE']
+        print("je vais dans l'exception")
+        return pytz.timezone(app.config['BABEL_DEFAULT_TIMEZONE'])
 
 
 def get_user() -> Dict:
@@ -83,7 +86,14 @@ def hello_world():
         username = g.user["name"]
     except Exception:
         username = None
-    return render_template("7-index.html", username=username)
+    current_time = datetime.datetime.now(get_timezone())
+    if get_locale() == "fr":
+        locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+        formatted_date = current_time.strftime("%d %b %Y à %H:%M:%S")
+    else:
+        formatted_date = current_time.strftime("%b %d, %Y, %I:%M:%S %p")
+    return render_template("index.html", username=username,
+                           current_time=formatted_date)
 
 
 if __name__ == "__main__":
