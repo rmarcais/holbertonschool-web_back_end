@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Route module for the API"""
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, _
 from typing import List
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def get_locale() -> List:
 @app.route("/")
 def hello_world():
     """Route that renders a simple template"""
-    return render_template("2-index.html")
+    return render_template("3-index.html")
 
 
 if __name__ == "__main__":
