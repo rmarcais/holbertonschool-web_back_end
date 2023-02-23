@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Route module for the API"""
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel
 from typing import List
 
 app = Flask(__name__)
