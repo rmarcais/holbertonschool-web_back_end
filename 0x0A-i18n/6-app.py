@@ -35,6 +35,11 @@ def get_locale() -> str:
     locale = request.args.get("locale")
     if locale and locale in languages:
         return locale
+    try:
+        if g.user["locale"] in languages:
+            return g.user["locale"]
+    except Exception:
+        pass
     return request.accept_languages.best_match(languages)
 
 
