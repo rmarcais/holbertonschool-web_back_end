@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Route module for the API"""
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
-import requests
 from typing import List
 
 app = Flask(__name__)
@@ -26,7 +25,7 @@ def get_locale() -> List:
     This function is invoked for each request
     to select a language translation to use for that request
     """
-    return requests.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route("/")
