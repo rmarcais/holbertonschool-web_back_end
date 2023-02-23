@@ -36,18 +36,26 @@ def get_locale() -> str:
     locale = request.args.get("locale")
     if locale and locale in languages:
         return locale
+    try:
+        if g.user["locale"] in languages:
+            return g.user["locale"]
+    except Exception:
+        pass
     return request.accept_languages.best_match(languages)
 
 
 @babel.timezoneselector
-def get_timezone() -> pytz.timezone:
+def get_timezone() -> str:
     """Returns a URL-provided or user time zone"""
     timezone_url = request.args.get("timezone")
     try:
-        timezone = pytz.timezone(timezone_url)
+        if not timezone_url:
+            timezone = g.user["timezone"]
+        else:
+            timezone = timezone_url
         return timezone
-    except pytz.exceptions.UnknownTimeZoneError:
-        return pytz.timezone(app.config['BABEL_DEFAULT_TIMEZONE'])
+    except (pytz.exceptions.UnknownTimeZoneError, Exception):
+        return app.config['BABEL_DEFAULT_TIMEZONE']
 
 
 def get_user() -> Dict:
@@ -75,7 +83,7 @@ def hello_world():
         username = g.user["name"]
     except Exception:
         username = None
-    return render_template("7-index.html", username=username)
+    return render_template("6-index.html", username=username)
 
 
 if __name__ == "__main__":
