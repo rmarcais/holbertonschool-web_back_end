@@ -3,6 +3,7 @@
 from flask import Flask, render_template
 from flask_babel import Babel
 import requests
+from typing import Any
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -20,7 +21,7 @@ app.config.from_object(Config)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> Any:
     """
     This function is invoked for each request
     to select a language translation to use for that request
