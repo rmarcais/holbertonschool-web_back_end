@@ -26,7 +26,6 @@ def get_locale() -> List:
     This function is invoked for each request
     to select a language translation to use for that request
     """
-    print("hello world")
     return requests.accept_languages.best_match(app.config['LANGUAGES'])
 
 
