@@ -2,8 +2,26 @@
 """Exercise module"""
 
 import redis
+from functools import wraps
 from typing import Callable, Optional, Union
 from uuid import uuid4
+
+
+def count_calls(method: Callable) -> Callable:
+    """
+    System to count how many times methods
+    of the Cache class are called
+    """
+    key = method.__qualname__
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """
+        Increments the count for the key key
+        every time the method method is called
+        """
+        return self._redis.incr(key)
+    return wrapper
 
 
 class Cache:
@@ -14,6 +32,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Generates a random key and stores the data in Redis"""
         key = str(uuid4())
