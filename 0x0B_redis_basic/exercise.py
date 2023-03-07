@@ -22,8 +22,8 @@ class Cache:
         return key
 
     def get(self,
-            key: str,
-            fn: Optional[Callable]) -> Union[str, bytes, int, float, None]:
+            key,
+            fn):
         """Redifines the Redis.get() method"""
         value = self._redis.get(key)
         if not value:
@@ -34,10 +34,10 @@ class Cache:
 
         return value
 
-    def get_str(self, key: str) -> str:
-        """Returns data as a string"""
+    def get_str(self, key):
+        """Parametrizes self.get with the correct conversion function"""
         return self.get(key, lambda value: value.decode("utf-8"))
 
-    def get_int(self, key: str) -> int:
+    def get_int(self, key):
         """Returns data as an integer"""
         return self.get(key, int)
