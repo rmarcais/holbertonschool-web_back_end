@@ -23,7 +23,7 @@ class Cache:
 
     def get(self,
             key: str,
-            fn: Optional[Callable]) -> Union[str, bytes, int, float, None]:
+            fn: Optional[Callable]) -> Union[str, bytes, int]:
         """Redifines the Redis.get() method"""
         value = self._redis.get(key)
         if not value:
