@@ -20,7 +20,29 @@ def count_calls(method: Callable) -> Callable:
         Increments the count for the key key
         every time the method method is called
         """
-        return self._redis.incr(key)
+        self._redis.incr(key)
+        return method(self, *args)
+    return wrapper
+
+
+def call_history(method: Callable) -> Callable:
+    """
+    System to store the history of inputs and outputs
+    for a particular function
+    """
+    key_input = method.__qualname__ + ":inputs"
+    key_ouput = method.__qualname__ + ":outputs"
+
+    @wraps(method)
+    def wrapper(self, *args, **kwrags):
+        """
+        Add the input parameters in one list and
+        the ouputs in another list
+        """
+        self._redis.rpush(key_input, str(args))
+        output = method(self, *args)
+        self._redis.rpush(key_ouput, str(args))
+        return output
     return wrapper
 
 
@@ -32,6 +54,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Generates a random key and stores the data in Redis"""
