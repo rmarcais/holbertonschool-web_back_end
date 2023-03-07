@@ -22,7 +22,7 @@ def count_requests(f: Callable) -> Callable:
         key = "count:{}".format(*args)
         local_redis = redis.Redis()
         local_redis.incr(key)
-        local_redis.expire(key, 10)
+        local_redis.expire(key, 20)
 
         return f(*args)
     return wrapper
