@@ -34,10 +34,10 @@ class Cache:
 
         return value
 
-    def get_str(self, data: bytes) -> str:
+    def get_str(self, key: str) -> str:
         """Returns data as a string"""
-        return data.decode("utf-8")
+        return self.get(key, lambda value: value.decode("utf-8"))
 
-    def get_int(self, data: bytes) -> int:
+    def get_int(self, key: str) -> int:
         """Returns data as an integer"""
-        return int(data)
+        return self.get(key, int)
