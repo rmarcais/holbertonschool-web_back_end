@@ -5,6 +5,7 @@ from functools import wraps
 import redis
 import requests
 from typing import Callable
+from time import sleep
 
 
 def count_requests(f: Callable) -> Callable:
@@ -23,9 +24,8 @@ def count_requests(f: Callable) -> Callable:
         local_redis = redis.Redis()
         local_redis.incr(key)
         calls = local_redis.get(key)
-
         if calls:
-            return calls.decode()
+            return "hello"
         local_redis.expire(key, 10)
 
         return f(*args)
