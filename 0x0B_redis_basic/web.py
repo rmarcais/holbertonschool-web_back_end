@@ -24,11 +24,7 @@ def count_requests(f: Callable) -> Callable:
         local_redis = redis.Redis()
         local_redis.incr(key)
         calls = local_redis.get(key)
-        if calls:
-            return "hello"
-        local_redis.expire(key, 10)
-
-        return f(*args)
+        return "hello"
     return wrapper
 
 
