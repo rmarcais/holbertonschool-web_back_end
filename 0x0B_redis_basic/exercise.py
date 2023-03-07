@@ -46,7 +46,7 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
-def replay(method) -> str:
+def replay(method) -> None:
     """Displays the history of calls of a particular function"""
     local_redis = redis.Redis()
 
