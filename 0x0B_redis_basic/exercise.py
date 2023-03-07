@@ -29,10 +29,8 @@ class Cache:
         if not value:
             return None
 
-        if fn == int:
-            value = self.get_int(value)
-        elif fn:
-            value = self.get_str(value)
+        if fn:
+            value = fn(value)
 
         return value
 
