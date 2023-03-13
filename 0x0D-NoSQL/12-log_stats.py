@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     print("Methods:")
     for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
-        print("    method {}: {}".format(
+        print("method {}: {}".format(
             method,
             nginx_collection.count_documents({"method": method})
         ))
