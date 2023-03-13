@@ -43,4 +43,4 @@ if __name__ == "__main__":
     print("IPs:")
     result = list(nginx_collection.aggregate(pipeline))
     for item in result:
-        print("    {} {}".format(item.get("_id"), item.get("count")))
+        print("\t{}: {}".format(item.get("_id"), item.get("count")))
