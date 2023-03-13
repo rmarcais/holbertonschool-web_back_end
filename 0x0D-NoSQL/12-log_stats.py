@@ -18,7 +18,7 @@ if __name__ == "__main__":
             nginx_collection.count_documents({"method": method})
         ))
 
-    print("{} status ckeck".format(
+    print("{} status check".format(
         nginx_collection.count_documents({"$and": [{"path": "/status"},
                                                    {"method": "GET"}]})
     ))
