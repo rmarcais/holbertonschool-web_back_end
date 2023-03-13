@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Script that provides some stats about Nginx logs stored in MongoDB"""
 
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 
 if __name__ == "__main__":
 
@@ -22,3 +22,25 @@ if __name__ == "__main__":
         nginx_collection.count_documents({"$and": [{"path": "/status"},
                                                    {"method": "GET"}]})
     ))
+
+    pipeline = [
+            {
+                "$group": {
+                    "_id": "$ip",
+                    "count": {"$sum": 1}
+                }
+            },
+            {
+                "$sort": {
+                    "count": DESCENDING
+                }
+            },
+            {
+                "$limit": 10
+            }
+        ]
+
+    print("IPs:")
+    result = list(nginx_collection.aggregate(pipeline))
+    for item in result:
+        print("    {} {}".format(item.get("_id"), item.get("count")))
