@@ -19,7 +19,7 @@ module.exports = function countStudents(path) {
       res[currentValue.field].push(currentValue.firstname);
       return res;
     }, {});
-    Object.keys(groupByField).forEach(key => {
+    Object.keys(groupByField).forEach((key) => {
       console.log(`Number of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key].join(', ')}`);
     });
   } catch (err) {
