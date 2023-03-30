@@ -7,7 +7,7 @@ export default class StudentsController {
     readDatabase(DB).then((result) => {
       response.write('This is the list of our students');
       Object.keys(result).sort().forEach((key) => {
-        response.write(`\nNumber of students in ${key}: ${result[key].length}. List: ${result[key]}`);
+        response.write(`\nNumber of students in ${key}: ${result[key].length}. List: ${result[key].join(', ')}`);
       });
       response.end();
     }).catch((error) => {
@@ -23,7 +23,7 @@ export default class StudentsController {
       response.send('Major parameter must be CS or SWE');
     } else {
       readDatabase(DB).then((result) => {
-        response.send(`List: ${result[major]}`);
+        response.send(`List: ${result[major].join(', ')}`);
       }).catch((error) => {
         response.status(500);
         response.send(error.message);
