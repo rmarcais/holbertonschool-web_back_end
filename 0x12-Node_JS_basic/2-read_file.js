@@ -1,31 +1,32 @@
 const fs = require('fs');
 
-function countStudents(file) {
-  let data;
+function countStudents(path) {
   try {
-    data = fs.readFileSync(file, 'utf-8');
-  } catch (error) {
+    const data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+    const [headerLine, ...lines] = data.split('\n').filter((line) => line.length > 0);
+    const headers = headerLine.split(',');
+
+    console.log(`Number of students: ${lines.length}`);
+
+    const listObj = lines.map((line) => line.split(',')
+      .reduce((object, currentValue, index) => ({
+        ...object,
+        [headers[index]]: currentValue,
+      }), {}));
+
+    const groupByField = listObj.reduce((res, currentValue) => {
+      res[currentValue.field] = res[currentValue.field] || [];
+      res[currentValue.field].push(currentValue.firstname);
+      return res;
+    }, {});
+    for (const key in groupByField) {
+      if (key) {
+        console.log(`Number of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key].join(', ')}`);
+      }
+    }
+  } catch (err) {
     throw new Error('Cannot load the database');
   }
-  const removeNewLine = data.split('\n');
-  removeNewLine.shift();
-  const students = removeNewLine.filter((element) => element).map((students) => students.split(','));
-  console.log(`Number of students: ${students.length}`);
-  const speciality = [];
-  students.forEach((student) => {
-    const elements = student[3];
-    if (!speciality.includes(elements)) {
-      speciality.push(elements);
-    }
-  });
-  speciality.forEach((spe) => {
-    const studentsBySpe = students.filter((element) => element[3] === spe);
-    const namesStudents = [];
-    studentsBySpe.forEach((student) => {
-      namesStudents.push(student[0]);
-    });
-    console.log(`Number of students in ${spe}: ${studentsBySpe.length}. List: ${namesStudents.join(', ')}`);
-  });
 }
 
 module.exports = countStudents;
