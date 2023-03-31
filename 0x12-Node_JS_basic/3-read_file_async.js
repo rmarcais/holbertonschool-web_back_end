@@ -12,11 +12,7 @@ module.exports = function countStudents(path) {
 
         result += `Number of students: ${lines.length}`;
 
-        const listObj = lines.map((line) => line.split(',')
-          .reduce((object, currentValue, index) => ({
-            ...object,
-            [headers[index]]: currentValue,
-          }), {}));
+        const listObj = lines.map((line) => line.split(',').reduce((object, currentValue, index) => Object.assign(object, { [headers[index]]: currentValue }), {}));
 
         const groupByField = listObj.reduce((res, currentValue) => {
           res[currentValue.field] = res[currentValue.field] || [];
