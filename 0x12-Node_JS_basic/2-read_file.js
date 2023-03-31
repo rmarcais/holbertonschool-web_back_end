@@ -20,7 +20,7 @@ module.exports = function countStudents(path) {
       return res;
     }, {});
     Object.keys(groupByField).forEach((key) => {
-      console.log(`Number of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key].join(', ')}`);
+      console.log(`Number of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key]}`);
     });
   } catch (err) {
     throw new Error('Cannot load the database');
