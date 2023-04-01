@@ -11,8 +11,8 @@ const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
+    res.write('This is the list of our students\n');
     countStudents(DB).then((result) => {
-      res.write('This is the list of our students\n');
       res.end(result.join('\n'));
     }).catch((error) => {
       res.end(`${error.name}: ${error.message}`);
