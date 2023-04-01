@@ -13,7 +13,7 @@ const app = http.createServer((req, res) => {
   } else if (req.url === '/students') {
     res.write('This is the list of our students\n');
     countStudents(DB).then((result) => {
-      res.end(result);
+      res.end(result.join('\n'));
     }).catch((error) => {
       res.end(error.toString());
     });
