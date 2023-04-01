@@ -8,9 +8,11 @@ function countStudents(path) {
       } else {
         const [headerLine, ...lines] = data.split('\n').filter((line) => line.length > 0);
         const headers = headerLine.split(',');
-        let result = '';
+        const result = [];
 
-        result += `Number of students: ${lines.length}`;
+        let message = `Number of students: ${lines.length}`;
+        console.log(message);
+        result.push(message);
 
         const listObj = lines.map((line) => line.split(',').reduce((object, currentValue, index) => Object.assign(object, { [headers[index]]: currentValue }), {}));
 
@@ -20,9 +22,10 @@ function countStudents(path) {
           return res;
         }, {});
         Object.keys(groupByField).forEach((key) => {
-          result += `\nNumber of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key].join(', ')}`;
+          message = `Number of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key].join(', ')}`;
+          console.log(message);
+          result.push(message);
         });
-        console.log(result);
         resolve(result);
       }
     });
