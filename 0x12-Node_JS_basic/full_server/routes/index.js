@@ -1,4 +1,4 @@
-import AppController from '../controllers/AppConstroller';
+import AppController from '../controllers/AppController';
 import StudentsController from '../controllers/StudentsController';
 
 const express = require('express');
