@@ -15,9 +15,9 @@ app.get('/students', (req, res) => {
   res.setHeader('content-type', 'text/plain');
   res.write('This is the list of our students\n');
   countStudents(DB).then((result) => {
-    res.end(result);
+    res.end(result.join('\n'));
   }).catch((error) => {
-    res.end(error.toString());
+    res.end(`${error.message}`);
   });
 });
 
