@@ -4,9 +4,9 @@ const DB = process.argv[2];
 
 export default class StudentsController {
   static getAllStudents(request, response) {
+    const students = [];
+    students.push('This is the list of our students');
     readDatabase(DB).then((result) => {
-      const students = [];
-      students.push('This is the list of our students');
       Object.keys(result).sort().forEach((key) => {
         students.push(`Number of students in ${key}: ${result[key].length}. List: ${result[key].join(', ')}`);
       });
