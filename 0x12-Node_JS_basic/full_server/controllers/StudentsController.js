@@ -2,7 +2,7 @@ import readDatabase from '../utils';
 
 const DB = process.argv[2];
 
-export default class StudentsController {
+module.exports = class StudentsController {
   static getAllStudents(request, response) {
     readDatabase(DB).then((result) => {
       const students = [];
@@ -31,4 +31,4 @@ export default class StudentsController {
       });
     }
   }
-}
+};
