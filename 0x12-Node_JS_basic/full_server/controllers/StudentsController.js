@@ -1,9 +1,7 @@
 import readDatabase from '../utils';
 
-const DB = process.argv[2];
-
 export default class StudentsController {
-  static getAllStudents(request, response) {
+  static getAllStudents(request, response, DB) {
     readDatabase(DB).then((result) => {
       const students = [];
       students.push('This is the list of our students');
@@ -18,7 +16,7 @@ export default class StudentsController {
     });
   }
 
-  static getAllStudentsByMajor(request, response) {
+  static getAllStudentsByMajor(request, response, DB) {
     const { major } = request.params;
     if (major !== 'CS' && major !== 'SWE') {
       response.status(500);

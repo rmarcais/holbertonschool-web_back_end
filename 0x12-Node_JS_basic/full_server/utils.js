@@ -16,7 +16,6 @@ export default function readDatabase(path) {
           res[currentValue.field].push(currentValue.firstname);
           return res;
         }, {});
-        console.log(groupByField);
         resolve(groupByField);
       }
     });
