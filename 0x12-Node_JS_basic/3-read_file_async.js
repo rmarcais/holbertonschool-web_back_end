@@ -4,7 +4,7 @@ function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
-        reject(new Error('Cannot load the databa'));
+        reject(Error('Cannot load the database'));
       } else {
         const [headerLine, ...lines] = data.split('\n').filter((line) => line.length > 0);
         const headers = headerLine.split(',');
