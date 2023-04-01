@@ -17,9 +17,6 @@ const app = http.createServer((req, res) => {
     }).catch((error) => {
       res.end(`${error.name}: ${error.message}`);
     });
-  } else {
-    res.statusCode = 404;
-    res.end();
   }
 });
 
