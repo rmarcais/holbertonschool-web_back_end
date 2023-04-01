@@ -18,6 +18,8 @@ const app = http.createServer((req, res) => {
       res.end(`${error.name}: ${error.message}`);
     });
   }
+  res.statusCode = 404;
+  res.end();
 });
 
 app.listen(port, hostname);
