@@ -11,6 +11,7 @@ function countStudents(path) {
         const result = [];
 
         let message = `Number of students: ${lines.length}`;
+        console.log(message);
         result.push(message);
 
         const listObj = lines.map((line) => line.split(',').reduce((object, currentValue, index) => Object.assign(object, { [headers[index]]: currentValue }), {}));
@@ -22,6 +23,7 @@ function countStudents(path) {
         }, {});
         Object.keys(groupByField).forEach((key) => {
           message = `Number of students in ${key}: ${groupByField[key].length}. List: ${groupByField[key].join(', ')}`;
+          console.log(message);
           result.push(message);
         });
         resolve(result);
