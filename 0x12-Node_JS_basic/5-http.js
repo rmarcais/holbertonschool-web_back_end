@@ -15,7 +15,7 @@ const app = http.createServer((req, res) => {
     countStudents(DB).then((result) => {
       res.end(result.join('\n'));
     }).catch((error) => {
-      res.end(`${error.name}: ${error.message}`);
+      res.end(`${error.message}`);
     });
   }
 });
