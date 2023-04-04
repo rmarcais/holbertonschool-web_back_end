@@ -14,7 +14,7 @@ describe('calculateNumber', function() {
   it('Checks 1.5 + 3.7', function() {
     assert.equal(calculateNumber(1.5, 3.7), 6);
   });
-  it('Checks 0.1 + 0.1', function() {
-    assert.equal(calculateNumber(0.1, 0.1), 0);
+  it('Checks -3 + 1.2', function() {
+    assert.equal(calculateNumber(-3, 1.2), -2);
   });
 });
