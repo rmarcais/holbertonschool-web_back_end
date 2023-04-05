@@ -6,5 +6,4 @@ module.exports = function calculateNumber(type, a, b) {
     } else if (type === 'DIVIDE') {
         return Math.round(b) !== 0 ? Math.round(a) / Math.round(b): 'Error';
     }
-    return 'Error';
 }

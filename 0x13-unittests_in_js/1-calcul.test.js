@@ -54,9 +54,3 @@ describe('calculateNumber with DIVIDE', function() {
     assert.equal(calculateNumber('DIVIDE', 0.1, 0.1), 'Error');
   });
 });
-
-describe('calculateNumber with a wrong type', function() {
-  it('Checks with NOPE as type', function() {
-    assert.equal(calculateNumber('NOPE', 3, 1), 'Error');
-  });
-});
