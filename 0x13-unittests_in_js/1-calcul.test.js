@@ -18,19 +18,19 @@ describe('calculateNumber', function() {
     assert.equal(calculateNumber('SUM', -3, 1.2), -2);
   });
   it('Checks 3 - 1', function() {
-    assert.equal(calculateNumber('SUBSTRACT', 3, 1), 2);
+    assert.equal(calculateNumber('SUBTRACT', 3, 1), 2);
   });
   it('Checks 1.4 - 4.5', function() {
-    assert.equal(calculateNumber('SUBSTRACT', 1.4, 4.5), -4);
+    assert.equal(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
   });
   it('Checks 1.2 - 3.7', function() {
-    assert.equal(calculateNumber('SUBSTRACT', 1.2, 3.7), -3);
+    assert.equal(calculateNumber('SUBTRACT', 1.2, 3.7), -3);
   });
   it('Checks 3.7 - 1.5', function() {
-    assert.equal(calculateNumber('SUBSTRACT', 3.7, 1.5), 2);
+    assert.equal(calculateNumber('SUBTRACT', 3.7, 1.5), 2);
   });
   it('Checks 0.1 - 0.1', function() {
-    assert.equal(calculateNumber('SUBSTRACT', 0.1, 0.1), 0);
+    assert.equal(calculateNumber('SUBTRACT', 0.1, 0.1), 0);
   });
   it('Checks 3 / 1', function() {
     assert.equal(calculateNumber('DIVIDE', 3, 1), 3);
