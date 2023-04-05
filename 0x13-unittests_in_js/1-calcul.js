@@ -1,7 +1,4 @@
 module.exports = function calculateNumber(type, a, b) {
-  if (typeof type !== 'string') {
-    throw new TypeError('The type parameter must be a string');
-  }
   const rounded_a = Math.round(a);
   const rounded_b = Math.round(b);
   if (type === 'SUM') {
