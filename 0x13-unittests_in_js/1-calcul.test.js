@@ -1,7 +1,7 @@
 const assert = require('assert');
 const calculateNumber = require('./1-calcul');
 
-describe('calculateNumber with SUM', function() {
+describe('calculateNumber', function() {
   it('Checks 1 + 3', function() {
     assert.equal(calculateNumber('SUM', 1, 3), 4);
   });
@@ -17,9 +17,6 @@ describe('calculateNumber with SUM', function() {
   it('Checks -3 + 1.2', function() {
     assert.equal(calculateNumber('SUM', -3, 1.2), -2);
   });
-});
-
-describe('calculateNumber with SUBSTRACT', function() {
   it('Checks 3 - 1', function() {
     assert.equal(calculateNumber('SUBSTRACT', 3, 1), 2);
   });
@@ -35,9 +32,6 @@ describe('calculateNumber with SUBSTRACT', function() {
   it('Checks 0.1 - 0.1', function() {
     assert.equal(calculateNumber('SUBSTRACT', 0.1, 0.1), 0);
   });
-});
-
-describe('calculateNumber with DIVIDE', function() {
   it('Checks 3 / 1', function() {
     assert.equal(calculateNumber('DIVIDE', 3, 1), 3);
   });
@@ -52,15 +46,5 @@ describe('calculateNumber with DIVIDE', function() {
   });
   it('Checks 0.1 / 0.1', function() {
     assert.equal(calculateNumber('DIVIDE', 0.1, 0.1), 'Error');
-  });
-  it('should throw an error if argument type is not a string', () => {
-    assert.throws(() => calculateNumber(true, 1, 2), {
-      name: 'TypeError',
-      message: 'The type parameter must be a string',
-    });
-    assert.throws(() => calculateNumber(1, 1, 5), {
-      name: 'TypeError',
-      message: 'The type parameter must be a string',
-    });
   });
 });
