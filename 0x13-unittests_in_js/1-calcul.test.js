@@ -53,4 +53,14 @@ describe('calculateNumber with DIVIDE', function() {
   it('Checks 0.1 / 0.1', function() {
     assert.equal(calculateNumber('DIVIDE', 0.1, 0.1), 'Error');
   });
+  it('should throw an error if argument type is not a string', () => {
+    assert.throws(() => calculateNumber(true, 1, 2), {
+      name: 'TypeError',
+      message: 'The type parameter must be a string',
+    });
+    assert.throws(() => calculateNumber(1, 1, 5), {
+      name: 'TypeError',
+      message: 'The type parameter must be a string',
+    });
+  });
 });
