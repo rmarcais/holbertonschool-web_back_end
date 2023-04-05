@@ -53,4 +53,14 @@ describe('calculateNumber with DIVIDE', function() {
   it('Checks 0.1 / 0.1', function() {
     assert.equal(calculateNumber('DIVIDE', 0.1, 0.1), 'Error');
   });
+  it('should throw an error if missing arguments', () => {
+    assert.throws(() => calculateNumber(1, 'school'), {
+      name: 'Error',
+      message: 'Missing arguments',
+    });
+    assert.throws(() => calculateNumber('holberton school'), {
+      name: 'Error',
+      message: 'Missing arguments',
+    });
+  });
 });
