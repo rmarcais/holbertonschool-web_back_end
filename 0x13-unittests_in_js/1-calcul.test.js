@@ -53,4 +53,10 @@ describe('calculateNumber with DIVIDE', function() {
   it('Checks 0.1 / 0.1', function() {
     assert.equal(calculateNumber('DIVIDE', 0.1, 0.1), 'Error');
   });
+
+  it('Should throw an error when type is missing', () => {
+    assert.throws(() => {
+      calculateNumber(undefined, 3.3, 4.6);
+    }, /Type must be a string/);
+  });
 });
