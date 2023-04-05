@@ -1,6 +1,6 @@
 const chai = require('chai');
 const { expect } = chai;
-const calculateNumber = require('./1-calcul');
+const calculateNumber = require('./2-calcul_chai');
 
 describe('calculateNumber', function() {
   it('Checks 1 + 3', function() {
