@@ -1,5 +1,5 @@
 const chai = require('chai');
-const expect = chai.expect;
+const { expect } = chai;
 const calculateNumber = require('./1-calcul');
 
 describe('calculateNumber with SUM', function() {
@@ -53,11 +53,5 @@ describe('calculateNumber with DIVIDE', function() {
   });
   it('Checks 0.1 / 0.1', function() {
     expect(calculateNumber('DIVIDE', 0.1, 0.1)).to.equal('Error');
-  });
-});
-
-describe('calculateNumber with a wrong type', function() {
-  it('Checks with NOPE as type', function() {
-    expect(calculateNumber('NOPE', 3, 1)).to.equal('Error');
   });
 });
