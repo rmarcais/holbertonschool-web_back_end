@@ -7,14 +7,14 @@ const data = {
   message: 'Hello World !',
 }
 
-const job = queue.create('push_notification_code', data).save((error) => {
-  console.log(`Notification job created: ${job.id}`);
-});
-
-job.on('complete', () => {
+const job = queue.create('push_notification_code', data)
+.on('complete', () => {
   console.log('Notification job completed');
+})
+.on('failed', () => {
+  console.log('Notification job failed');
 });
 
-job.on('failed', () => {
-  console.log('Notification job failed');
+job.save((error) => {
+  console.log(`Notification job created: ${job.id}`);
 });
